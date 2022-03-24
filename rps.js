@@ -11,7 +11,7 @@ function computerPlay() {
 function playRound(playerSelection, computerSelection) {
   if (playerSelection.toLowerCase() === 'rock') {
     if (computerSelection === 'Rock') {
-      return 'Tie game! You both choose rock.';
+      return 'Tie! You both choose rock.';
     }
     if (computerSelection === 'Paper') {
       cpuWins++;
@@ -24,14 +24,44 @@ function playRound(playerSelection, computerSelection) {
       return 'Error: Something went wrong, try again';
     }
   }
+
+  if (playerSelection.toLowerCase() === 'paper') {
+    if (computerSelection === 'Paper') {
+      return 'Tie! You both choose paper.';
+    }
+    if (computerSelection === 'Scissors') {
+      cpuWins++;
+      return 'You lose! Scissors beats paper.';
+    }
+    if (computerSelection === 'Rock') {
+      playerWins++;
+      return 'You won! Paper beats rock';
+    } else {
+      return 'Error: Something went wrong, try again';
+    }
+  }
+
+  if (playerSelection.toLowerCase() === 'scissors') {
+    if (computerSelection === 'Scissors') {
+      return 'Tie! You both choose scissors.';
+    }
+    if (computerSelection === 'Rock') {
+      cpuWins++;
+      return 'You lose! Rock beats scissors.';
+    }
+    if (computerSelection === 'Paper') {
+      playerWins++;
+      return 'You won! Scissors beats paper';
+    } else {
+      return 'Error: Something went wrong, try again';
+    }
+  }
 }
 
-// Write a NEW function called game(). Call the playRound
-// function inside of this one to play a 5 round game that
-// keeps score and reports a winner or loser at the end.
-
 function game() {
-  const playerSelection = 'rock';
+  const playerSelection = window.prompt(
+    'Choose "Rock", "Paper", or "Scissors"?'
+  );
 
   for (let i = 0; i < 5; i++) {
     const computerSelection = computerPlay();
@@ -40,13 +70,14 @@ function game() {
 
   if (playerWins > cpuWins) {
     console.log('You won best out of 5 rounds with: ' + playerWins + ' wins!');
-  }
-  if (cpuWins > playerWins) {
+  } else if (cpuWins > playerWins) {
     console.log(
       'You lost best out of 5 rounds. The CPU had: ' + cpuWins + ' wins!'
     );
   } else {
-    console.log('Either you tied or error occured');
+    console.log(
+      'Either you tied, you did not choose properly, or an error occured'
+    );
   }
 }
 
