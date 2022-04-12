@@ -1,5 +1,7 @@
 let playerWins = 0;
 let cpuWins = 0;
+let textDiv = document.createElement('div');
+let scoreDiv = document.createElement('div');
 
 function computerPlay() {
   const cpuRPS = ['Rock', 'Paper', 'Scissors'];
@@ -15,10 +17,18 @@ function playRound(playerSelection, computerSelection) {
     }
     if (computerSelection === 'Paper') {
       cpuWins++;
+      scoreDiv.innerText =
+        'Current score: Your wins ' + playerWins + ', CPU wins ' + cpuWins;
+      document.getElementById('myScoreDiv').appendChild(scoreDiv);
+      checkWinner();
       return 'You lose! Paper beats rock.';
     }
     if (computerSelection === 'Scissors') {
       playerWins++;
+      scoreDiv.innerText =
+        'Current score: Your wins ' + playerWins + ', CPU wins ' + cpuWins;
+      document.getElementById('myScoreDiv').appendChild(scoreDiv);
+      checkWinner();
       return 'You won! Rock beats scissors';
     } else {
       return 'Error: Something went wrong, try again';
@@ -31,10 +41,18 @@ function playRound(playerSelection, computerSelection) {
     }
     if (computerSelection === 'Scissors') {
       cpuWins++;
+      scoreDiv.innerText =
+        'Current score: Your wins ' + playerWins + ', CPU wins ' + cpuWins;
+      document.getElementById('myScoreDiv').appendChild(scoreDiv);
+      checkWinner();
       return 'You lose! Scissors beats paper.';
     }
     if (computerSelection === 'Rock') {
       playerWins++;
+      scoreDiv.innerText =
+        'Current score: Your wins ' + playerWins + ', CPU wins ' + cpuWins;
+      document.getElementById('myScoreDiv').appendChild(scoreDiv);
+      checkWinner();
       return 'You won! Paper beats rock';
     } else {
       return 'Error: Something went wrong, try again';
@@ -47,10 +65,18 @@ function playRound(playerSelection, computerSelection) {
     }
     if (computerSelection === 'Rock') {
       cpuWins++;
+      scoreDiv.innerText =
+        'Current score: Your wins ' + playerWins + ', CPU wins ' + cpuWins;
+      document.getElementById('myScoreDiv').appendChild(scoreDiv);
+      checkWinner();
       return 'You lose! Rock beats scissors.';
     }
     if (computerSelection === 'Paper') {
       playerWins++;
+      scoreDiv.innerText =
+        'Current score: Your wins ' + playerWins + ', CPU wins ' + cpuWins;
+      document.getElementById('myScoreDiv').appendChild(scoreDiv);
+      checkWinner();
       return 'You won! Scissors beats paper';
     } else {
       return 'Error: Something went wrong, try again';
@@ -58,27 +84,32 @@ function playRound(playerSelection, computerSelection) {
   }
 }
 
-function game() {
-  const playerSelection = window.prompt(
-    'Choose "Rock", "Paper", or "Scissors"?'
-  );
+document.getElementById('rock').addEventListener('click', function () {
+  textDiv.innerText = playRound('rock', computerPlay());
+});
+document.getElementById('paper').addEventListener('click', function () {
+  textDiv.innerText = playRound('paper', computerPlay());
+});
+document.getElementById('scissors').addEventListener('click', function () {
+  textDiv.innerText = playRound('scissors', computerPlay());
+});
 
-  for (let i = 0; i < 5; i++) {
-    const computerSelection = computerPlay();
-    console.log(playRound(playerSelection, computerSelection));
-  }
+document.getElementById('myTextDiv').appendChild(textDiv);
 
-  if (playerWins > cpuWins) {
-    console.log('You won best out of 5 rounds with: ' + playerWins + ' wins!');
-  } else if (cpuWins > playerWins) {
-    console.log(
-      'You lost best out of 5 rounds. The CPU had: ' + cpuWins + ' wins!'
-    );
-  } else {
-    console.log(
-      'Either you tied, you did not choose properly, or an error occured'
-    );
+function checkWinner() {
+  if (playerWins === 5 || cpuWins === 5) {
+    if (playerWins > cpuWins) {
+      scoreDiv.innerText = 'You won best out of 5 round!';
+      document.getElementById('myScoreDiv').appendChild(scoreDiv);
+    } else if (cpuWins > playerWins) {
+      scoreDiv.innerText = 'You lost best out of 5 rounds';
+      document.getElementById('myScoreDiv').appendChild(scoreDiv);
+    } else {
+      console.log(
+        'Either you tied, you did not choose properly, or an error occured'
+      );
+    }
+    playerWins = 0;
+    cpuWins = 0;
   }
 }
-
-game();
